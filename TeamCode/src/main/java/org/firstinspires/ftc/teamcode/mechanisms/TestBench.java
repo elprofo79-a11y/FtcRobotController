@@ -13,8 +13,14 @@ public class TestBench {
     public void init(HardwareMap hardwareMap){
 
         motor = hardwareMap.get(DcMotor.class, "motor");
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ticksPerRev = motor.getMotorType().getTicksPerRev();
+        motor.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    public double getMotorPower() {
+        return motor.getPower();
     }
 
     public void setMotorSpeed(double Speed){

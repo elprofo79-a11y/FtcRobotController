@@ -15,12 +15,33 @@ public class DcMotorPractice extends OpMode {
 
     }
 
-
     @Override
     public void loop() {
-        bench.setMotorSpeed(0.2);
+
+        double power;
+
+        if (gamepad1.a) {
+            power = 0.2;
+        } else if (gamepad1.b) {
+            power = 0.5;
+        } else if (gamepad1.x) {
+            power = 0.8;
+        } else {
+            power = 0.0;
+        }
+
+        bench.setMotorSpeed(power);
+
+        telemetry.addData("Requested Power", power);
+        telemetry.addData("Motor Power", bench.getMotorPower());
         telemetry.addData("Motor Ticks", bench.getMotorTicks());
-        telemetry.addData("Motor Revs", bench.getMotorRev());
         telemetry.update();
     }
+    //@Override
+    //public void loop() {
+      //  bench.setMotorSpeed(0.1);
+        //telemetry.addData("Motor Ticks", bench.getMotorTicks());
+        //telemetry.addData("Motor Revs", bench.getMotorRev());
+        //telemetry.update();
+    //}
 }

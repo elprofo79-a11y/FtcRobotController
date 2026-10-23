@@ -23,7 +23,7 @@ public class StarterBotAutoOne extends OpMode {
     private CRServo windServo = null;
 
     // Autonomous constants
-    private static final double DRIVE_POWER = -0.25;
+    private static final double DRIVE_POWER = 0.25;
     private static final long DRIVE_TIME_MS = 700;
 
     private static final double TARGET_VELOCITY = 1160; //try to use 1500 like in teleop
@@ -39,7 +39,8 @@ public class StarterBotAutoOne extends OpMode {
         INITIALIZED,
         DRIVE_AWAY,
         LAUNCH_POLLEN,
-        COMPLETE
+        COMPLETE,
+        PARK
     }
 
     private AutoState currentState = AutoState.INITIALIZED;
@@ -197,9 +198,22 @@ public class StarterBotAutoOne extends OpMode {
                 }
                 break;
 
+            case PARK:
+                leftDrive.setPower(DRIVE_POWER * -1);
+                rightDrive.setPower(DRIVE_POWER);
+                if (stateTimer.seconds() >= 26.0) {
+                    // Move to launcher state.
+                    transitionTo(AutoState.COMPLETE);
+                }
+                break;
+
+
+
+
             // ----------------------------------
             // STATE 3: AUTONOMOUS COMPLETE
             // ----------------------------------
+
             case COMPLETE:
 
                 stopAllActuators();
